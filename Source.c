@@ -3,12 +3,12 @@
 #include <stdlib.h>
 
 #define rows 20
-#define characters 129
+#define symbols 129
 #define words 5
 
-char enLetters[] = "wWeErRtTyYuUiIoOpPaAsSdDfFgGhHjJkKlLzZxXcCvVbBnNmM";
-char* userArray[rows][characters];
-int wordCounter = 0;
+char enLetters[] = "AaBbCcDdEeFfGgHhLIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
+char* rawArray[rows][symbols];
+int wordCount = 0;
 
 
 int main()
@@ -20,30 +20,30 @@ int main()
 	return 0;
 }
 
-int input(void) // rows <= 20; letters <= 128; 2 <=  words <= 20; enter -> next string; 'esc' -> end of input;
+int input(void)
 {
-	char character;
+	char c;
 
 	for (int i = 0; i < rows; i++)
 	{
-		wordCounter = 0;
+		wordCount = 0;
 
-		for (int j = 0; j < characters; j++)
+		for (int j = 0; j < symbols; j++)
 		{
-			character = getch();
+			c = getch();
 
-			if (character != 13 && character != 27)
+			if (c != 13 && c != 27)
 			{
-				userArray[i][j] = character;
-				fprintf(stdout, "%c", character);
+				rawArray[i][j] = c;
+				fprintf(stdout, "%c", c);
 
 				if (j != 0)
 				{
-					if (isWord(i, j - 1) == 0 && userArray[i][j] == ' ')
+					if (wordCheck(i, j - 1) == 0 && rawArray[i][j] == ' ')
 					{
-						wordCounter += 1;
+						wordCount += 1;
 
-						if (wordCounter == words)
+						if (wordCount == words)
 						{
 							printf("\n");
 							break;
@@ -51,11 +51,11 @@ int input(void) // rows <= 20; letters <= 128; 2 <=  words <= 20; enter -> next 
 					}
 				}
 			}
-			else if (character == 27 && wordCounter >= 2) //esc pressed
+			else if (c == 27 && wordCount >= 2)
 			{
 				return 0;
 			}
-			else if (character == 13 && wordCounter >= 2) //enter pressed
+			else if (c == 13 && wordCount >= 2)
 			{
 				printf("\n");
 				break;
@@ -68,17 +68,17 @@ int input(void) // rows <= 20; letters <= 128; 2 <=  words <= 20; enter -> next 
 	}
 }
 
-int isWord(int i, int j) //if there is at least one letter between spaces, it is a word
+int wordCheck(int i, int j)
 {
 	for (j; j >= 0; j--)
 	{
-		if (userArray[i][j] == ' ')
+		if (rawArray[i][j] == ' ')
 		{
 			return 1;
 		}
 		else
 		{
-			if (strchr(enLetters, userArray[i][j]) != NULL)
+			if (strchr(enLetters, rawArray[i][j]) != NULL)
 			{
 				return 0;
 			}
@@ -91,11 +91,11 @@ int output(void)
 	printf("\n\n");
 	for (int i = 0; i < rows; i++)
 	{
-		if (userArray[i][0] != '\0')
+		if (rawArray[i][0] != '\0')
 		{
-			for (int j = 0; j < characters; j++)
+			for (int j = 0; j < symbols; j++)
 			{
-				printf("%c", userArray[i][j]);
+				printf("%c", rawArray[i][j]);
 			}
 		}
 		else
