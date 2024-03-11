@@ -13,6 +13,8 @@ char firstWord[64];
 char secondWord[64];
 int wordCount = 0;
 
+//search, copy
+
 int main()
 {
 	input();
