@@ -8,6 +8,9 @@
 
 char enLetters[] = "AaBbCcDdEeFfGgHhLIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
 char* rawArray[rows][symbols];
+char* cookedArray[rows][symbols];
+char firstWord[64];
+char secondWord[64];
 int wordCount = 0;
 
 int main()
@@ -39,6 +42,16 @@ int input(void)
 					if (wordCheck(i, j - 1) == 0 && rawArray[i][j] == ' ')
 					{
 						wordCount += 1;
+
+						if (wordCount < 1)
+						{
+							firstWord[j] == c;
+						}
+
+						/*if (1 < wordCount < 2)
+						{
+							secondWord[j] == c; //not from start
+						}*/
 
 						if (wordCount == words)
 						{
@@ -103,6 +116,11 @@ int output(void)
 
 		printf("\n");
 	}
+}
+
+int putIn(int i, char charArray[64])
+{
+
 }
 
 int swapFirstAndSecondWords(void)
