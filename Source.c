@@ -10,14 +10,11 @@ char enLetters[] = "AaBbCcDdEeFfGgHhLIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
 char* rawArray[rows][symbols];
 int wordCount = 0;
 
-
 int main()
 {
 	input();
 	output();
 	swapFirstAndSecondWords();
-
-	return 0;
 }
 
 int input(void)
@@ -51,18 +48,18 @@ int input(void)
 					}
 				}
 			}
-			else if (c == 27 && wordCount >= 2)
-			{
-				return 0;
-			}
 			else if (c == 13 && wordCount >= 2)
 			{
 				printf("\n");
 				break;
 			}
+			else if (c == 27 && wordCount >= 2)
+			{
+				return 0;
+			}
 			else
 			{
-
+				//nothing
 			}
 		}
 	}
