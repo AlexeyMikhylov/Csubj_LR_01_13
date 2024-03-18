@@ -43,12 +43,15 @@ int input(void)
 					{
 						wordCount += 1;
 
-						if (wordCount < 1)
+						//
+						if (wordCount <= 1)
 						{
-							firstWord[j] == c;
+							//firstWord[j] == c;
+							putIn(i, j, firstWord);
 						}
+						//
 
-						/*if (1 < wordCount < 2)
+						/*if (wordCount <= 1)
 						{
 							secondWord[j] == c; //not from start
 						}*/
@@ -118,9 +121,23 @@ int output(void)
 	}
 }
 
-int putIn(int i, char charArray[64])
+//
+int putIn(int i, int j, char charArray[64]) //
 {
-
+	for (i; i > 0; i--)
+	{
+		if (rawArray[i][j] != ' ')
+		{
+			return 1;
+		}
+		else
+		{
+			if (strchr(enLetters, rawArray[i][j]) != NULL)
+			{
+				charArray[i] = rawArray[i][j];
+			}
+		}
+	}
 }
 
 int swapFirstAndSecondWords(void)
