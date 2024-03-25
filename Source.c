@@ -43,18 +43,13 @@ int input(void)
 					{
 						wordCount += 1;
 
-						//
+						/*
 						if (wordCount <= 1)
 						{
 							//firstWord[j] == c;
 							putIn(i, j, firstWord);
 						}
-						//
-
-						/*if (wordCount <= 1)
-						{
-							secondWord[j] == c; //not from start
-						}*/
+						*/
 
 						if (wordCount == words)
 						{
@@ -83,25 +78,39 @@ int input(void)
 
 int wordCheck(int i, int j)
 {
+	int isWord = 0;
+
 	for (j; j >= 0; j--)
 	{
-		if (rawArray[i][j] == ' ')
+		if (rawArray[i][j] != ' ')
 		{
-			return 1;
+			for (int k = 0; k < strlen(enLetters); k++)
+			{
+				if (rawArray[i][j] == enLetters[k])
+				{
+					isWord = 1;
+				}
+			}
 		}
 		else
 		{
-			if (strchr(enLetters, rawArray[i][j]) != NULL)
-			{
-				return 0;
-			}
+			break;
 		}
+	}
+
+	if (isWord != 1)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
 	}
 }
 
 int output(void)
 {
-	printf("\n\n");
+	printf("\n\nOriginal text:\n");
 	for (int i = 0; i < rows; i++)
 	{
 		if (rawArray[i][0] != '\0')
@@ -113,8 +122,7 @@ int output(void)
 		}
 		else
 		{
-			printf("\n");
-			return 0;
+			break;
 		}
 
 		printf("\n");
@@ -124,19 +132,33 @@ int output(void)
 //
 int putIn(int i, int j, char charArray[64]) //
 {
-	for (i; i > 0; i--)
+	int isWord = 0;
+
+	for (j; j >= 0; j--)
 	{
 		if (rawArray[i][j] != ' ')
 		{
-			return 1;
+			for (int k = 0; k < strlen(enLetters); k++)
+			{
+				if (rawArray[i][j] == enLetters[k])
+				{
+					isWord = 1;
+				}
+			}
 		}
 		else
 		{
-			if (strchr(enLetters, rawArray[i][j]) != NULL)
-			{
-				charArray[i] = rawArray[i][j];
-			}
+			break;
 		}
+	}
+
+	if (isWord != 1)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
 	}
 }
 
