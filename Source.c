@@ -9,9 +9,12 @@
 char enLetters[] = "AaBbCcDdEeFfGgHhLIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
 char* rawArray[rows][symbols];
 char* cookedArray[rows][symbols];
-char firstWord[64];
-char secondWord[64];
+
+char* firstWords[rows][64];
+char* secondWords[rows][64];
+
 int wordCount = 0;
+int modIndexes[rows];
 
 int main()
 {
@@ -43,18 +46,25 @@ int input(void)
 					{
 						wordCount += 1;
 
-						/*
-						if (wordCount <= 1)
-						{
-							//firstWord[j] == c;
-							putIn(i, j, firstWord);
-						}
-						*/
-
 						if (wordCount == words)
 						{
 							printf("\n");
 							break;
+						}
+
+						if (wordCount == 1)
+						{
+							putInWord(i, j - 1, firstWords);
+						}
+
+						if (wordCount == 2)
+						{
+							putInWord(i, j - 1, secondWords);
+						}
+
+						if (wordCount == 3) //if third word
+						{
+							getModIndex(i, j - 1, modIndexes); //get index of first letter of word
 						}
 					}
 				}
@@ -129,40 +139,72 @@ int output(void)
 	}
 }
 
-//
-int putIn(int i, int j, char charArray[64]) //
+int putInWord(int i, int j, char *wordArray[rows][64])
 {
-	int isWord = 0;
-
 	for (j; j >= 0; j--)
 	{
 		if (rawArray[i][j] != ' ')
 		{
-			for (int k = 0; k < strlen(enLetters); k++)
+			wordArray[i][j] = rawArray[i][j];
+		}
+		else
+		{
+			wordArray[i][j] = '\0';
+			return 0;
+		}
+	}
+}
+
+int getModIndex(int i, int j, int indexes[rows])
+{
+	for (j; j >= 0; j--)
+	{
+		if (rawArray[i][j] != ' ')
+		{
+			indexes[i] = j; //index of first letter of word
+		}
+		else
+		{
+			return 0;
+		}
+	}
+}
+
+int swapFirstAndSecondWords(void)
+{
+	printf("\nModified text:\n");
+
+	for (int i = 0; i < rows; i++)
+	{
+		if (rawArray[i][0] != '\0')
+		{
+			for (int j = 0; j < 64; j++)
 			{
-				if (rawArray[i][j] == enLetters[k])
+				if (secondWords[i][j] != '\0')
 				{
-					isWord = 1;
+					printf("%c", secondWords[i][j]);
 				}
 			}
+
+			printf(" ");
+
+			for (int j = 0; j < 64; j++)
+			{
+				printf("%c", firstWords[i][j]);
+			}
+
+			printf(" ");
+
+			for (int k = modIndexes[i]; k < symbols; k++)
+			{
+				printf("%c", rawArray[i][k]);
+			}
+
+			printf("\n");
 		}
 		else
 		{
 			break;
 		}
 	}
-
-	if (isWord != 1)
-	{
-		return 1;
-	}
-	else
-	{
-		return 0;
-	}
-}
-
-int swapFirstAndSecondWords(void)
-{
-	
 }
